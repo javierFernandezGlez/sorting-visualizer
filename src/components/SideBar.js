@@ -24,7 +24,7 @@ function SideBar(props) {
                         <h3>Sorting Algorithms</h3>
                         <ul className="sidebar-list">
                 <li>
-                    <Link to="/introduction">
+                    <Link to="/">
                         
                         <span className="item">Introduction</span>
                     </Link>
