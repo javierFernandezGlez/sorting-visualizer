@@ -9,21 +9,18 @@ function MergeVisualizer() {
         return Array.from({length: n}, () => Math.floor(1+ Math.random() * 100));
     }
     
-    const initialArray = randomArray(100);
+    const [length, setLength] = useState(100);
 
-    const auxArray = [];
-
-    let i = 99;
-
-    while(i >= 0) {
-        auxArray.push(i);
-        i--;
-    }
-
-  
+    const initialArray = randomArray(length);
     
+  
     const [state, setState] = useState(initialArray);
-    const [iterations, setIterations] = useState(0);
+    
+    const updateInitialArray = (e) => {
+      setLength(e.target.value);
+      const newArray = randomArray(length);
+      setState([...newArray]);
+    }
 
     
     const updateArray = () => {
@@ -123,7 +120,8 @@ function MergeVisualizer() {
       return (
         <div className="visualizer">
         <SideBar/>
-        
+        <h1 style={{textAlign: "center"}}>Length: {length}</h1>
+        <input className="slider" type="range" min={25} max={150} value={length} onChange={updateInitialArray}></input>
         <div className="array">
           {state.map((element) => {
             return (
@@ -134,7 +132,7 @@ function MergeVisualizer() {
           })}
           </div>
           <Button variant="light" onClick={() => mergeSort()}>Merge Sort</Button>
-          <Button variant="light" onClick={() => updateArray()}>Generate New Array</Button>
+          <Button variant="light" onClick={() => updateInitialArray()}>Generate New Array</Button>
         </div>
       );
     }

@@ -8,17 +8,19 @@ function SelectionVisualizer() {
       return Array.from({length: n}, () => [Math.floor(1+ Math.random() * 100), false]);
     }
   
-    const initialArray = randomArray(100);
-    const auxArray = [];
-
-    let i = 99;
-
-    while(i >= 0) {
-        auxArray.push([i, false]);
-        i--;
-    }
+    const [length, setLength] = useState(100);
+  
+    const initialArray = randomArray(length);
+  
+    const [array, setArray] = useState(initialArray);
     
-    const [array, setArray] = useState(auxArray);
+  
+    
+    const updateArray = (e) => {
+      setLength(e.target.value);
+      const newArray = randomArray(length);
+      setArray([...newArray]);
+    }
     const [iterations, setIterations] = useState(0);
   
     async function selectionSort(array) {
@@ -84,7 +86,8 @@ function SelectionVisualizer() {
     return (
       <div className="visualizer">
       <SideBar/>
-      <h1 style={{textAlign: "center"}}>Iterations: {iterations}</h1>
+      <h1 style={{textAlign: "center"}}>Length: {length}</h1>
+      <input className="slider" type="range" min={25} max={150} value={length} onChange={updateArray}></input>
       <div className="array">
         {array.map((element,key) => {
           return (

@@ -7,14 +7,20 @@ function BubbleVisualizer() {
     function randomArray(n) {
       return Array.from({length: n}, () => [Math.floor(1+ Math.random() * 100), false]);
     }
+    const [length, setLength] = useState(100);
   
-    const initialArray = randomArray(100);
+    const initialArray = randomArray(length);
   
     const [array, setArray] = useState(initialArray);
-    const [iterations, setIterations] = useState(0);
+    
   
     
-    
+    const updateArray = (e) => {
+      setLength(e.target.value);
+      const newArray = randomArray(length);
+      setArray([...newArray]);
+    }
+
     const red = [];
     for(let i = 0; i < array.length; i++) {
       red.push(false);
@@ -38,7 +44,7 @@ function BubbleVisualizer() {
   
     async function insertionSort(arr) {
       let n = arr.length;
-      let count = 0;
+      
   
       for(let i = 1; i < n; i++) {
           
@@ -47,11 +53,11 @@ function BubbleVisualizer() {
           while (j > 0 && arr[j][0] < arr[j-1][0]) {
                 arr[j][1] = true;
                 swap(j, j-1, arr);
-                count++;
+                
                 j--;
                 const newArr = [...arr];
                 setArray(newArr);
-                setIterations(count);
+                
                 await politeDelay(4);
                 arr[j][1] = false;
           }
@@ -61,23 +67,23 @@ function BubbleVisualizer() {
     }
     async function bubbleSort( arr) {
       const n = arr.length;
-      let count = 0;
+      
         for (let i = 0; i < n-1; i++) {
             for (let j = 0; j < n-i-1; j++) {
                 arr[j][1] = true;
                 arr[j+1][1] = true;
-                count++;
+                
                 if (arr[j][0] > arr[j+1][0]) {
                   swap(j,j+1,arr);
                   
                   const newArr = [...arr];
-                  setIterations(count);
+                  
                   setArray(newArr);
                   await politeDelay(4);
                 }
                 else {
                   const newArr = [...arr];
-                  setIterations(count);
+                  
                   setArray(newArr);
                   await politeDelay(4);
                 }
@@ -192,7 +198,8 @@ function BubbleVisualizer() {
     return (
       <div className="visualizer">
       <SideBar/>
-      <h1 style={{textAlign: "center"}}>Iterations: {iterations}</h1>
+      <h1 style={{textAlign: "center"}}>Length: {length}</h1>
+      <input className="slider" type="range" min={25} max={150} value={length} onChange={updateArray}></input>
       <div className="array">
         {array.map(element => {
           return (

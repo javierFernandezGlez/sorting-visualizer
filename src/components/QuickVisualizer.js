@@ -7,8 +7,18 @@ function QuickVisualizer() {
         return Array.from({length: n}, () => Math.floor(1+ Math.random() * 100));
     }
     
-    const initialArray = randomArray(100);
-    const [state, setState] = useState(initialArray); 
+    const [length, setLength] = useState(100);
+
+    const initialArray = randomArray(length);
+    
+  
+    const [state, setState] = useState(initialArray);
+    
+    const updateInitialArray = (e) => {
+      setLength(e.target.value);
+      const newArray = randomArray(length);
+      setState([...newArray]);
+    }
 
     function politeDelay(milliseconds){
         return new Promise(resolve => {
@@ -71,7 +81,7 @@ function QuickVisualizer() {
     // }
 
     const updateArray = () => {
-        let array = randomArray(100);
+        let array = randomArray(length);
         for(let i = 0; i < array.length; i++) {
             let bar = document.getElementById(i).style;
             bar.backgroundColor = "bisque";
@@ -167,10 +177,11 @@ function QuickVisualizer() {
       return (
         <div className="visualizer">
     <SideBar/>
-    
+    <h1 style={{textAlign: "center"}}>Length: {length}</h1>
+        <input className="slider" type="range" min={25} max={150} value={length} onChange={updateInitialArray}></input>
     <div className="array">
       {state.map((element, key) => { 
-        return key < 100 ? 
+        return key < length ? 
           (
             
             <div id={key} className='box' style={{height:`${element*3}px`}}>
