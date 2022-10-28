@@ -24,7 +24,7 @@ function App() {
     <div className="App">
       <Header/>
       <Routes>
-        <Route path="/" element={<Introduction/>} />
+        <Route path="/introduction" element={<Introduction/>} />
         <Route path="/insertion" element={<Insertion/>} />
         <Route path="/bubble" element={<Bubble/>} />
         <Route path="/mergesort" element={<MergeSort/>} />
